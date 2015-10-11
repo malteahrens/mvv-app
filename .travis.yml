@@ -31,6 +31,8 @@ script:
   - phonegap plugin add cordova-plugin-network-information
   - phonegap plugin add cordova-plugin-geolocation
   - phonegap build
+  - rm -rf release || exit 0;
+  - mkdir release;
   - '/bin/cp -rf platforms/android/build/outputs/apk/*.apk ../release'
   - cd ..
 
