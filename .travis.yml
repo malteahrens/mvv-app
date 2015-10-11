@@ -32,15 +32,15 @@ script:
   - git clone --depth=50 --branch=android https://malteahrens:${GH_TOKEN}@github.com/malteahrens/mvv-app
   - cd mvv-app
   - git show-ref
-  - git checkout mobile
-  #- ls mapdis/www
-  #- pwd
-  #- git add --all mapdis/www
-  #- git config user.name blibla
-  #- git config user.email blub@github.com
-  #- git commit . -m "Android App"
-  #- git config --global push.default simple
-  #- git push
+  - git checkout andorid
+  - ls mvv-app/www
+  - pwd
+  - git add --all mvv-app/www
+  - git config user.name blibla
+  - git config user.email blub@github.com
+  - git commit . -m "Android App"
+  - git config --global push.default simple
+  - git push
 
 env:
   global:
