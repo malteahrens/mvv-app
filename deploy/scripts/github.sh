@@ -15,6 +15,6 @@ repo=https://malteahrens:${GH_TOKEN}@github.com/malteahrens/mvv-app
 git remote set-url origin $repo
 git status
 ls -lah
-git add release
+git add release/*
 git commit -m "Android release for SDK 22 [ci skip]"
 git push
