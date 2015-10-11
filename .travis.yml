@@ -25,6 +25,7 @@ script:
   - phonegap create app com.example.mvv MvvApp
   - cd app
   - phonegap platform add android
+  - cp -R ../mvv-app/www/* ./www
   - phonegap plugin add org.apache.cordova.device
   - phonegap plugin add cordova-plugin-vibration
   - phonegap plugin add cordova-plugin-device-orientation
