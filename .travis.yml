@@ -40,5 +40,5 @@ script:
 env:
   global:
     # this is for Travis to be able to push back to github
-    - secure: "P0SFVXYMJhNb3dX/Hx4rxjL/toViP0Vo0yXbMK/vwOsSrixkU84ltMGykBYTUztdAFJvsO0xrhKsdPbBmdjEF48emrmoymknxKYPIJ6NL1N6fy0EUoE6o7vBX+agthD/uhSNCJgXRK+giqxP5Htz3BkrU9VgdFdVrSqU9bsm4Bc="
+    secure: "bo+mz1MmYF+AtNdHcBswimI6B9x5TKw4PumUDFK+AQfxZYib5j19Hnb34zsf7TUg0gc6KluP9kHeSg4HeHEuLeqICPFsWdvhHiRKCH+Qjpb+iVBL+FkHRWoceQGezeggt+A/5c68chSdOonWff/gg300XeXCJAS/cKpHCRwur81wNViIVmm4usBYYwCZQhzKftkKlXmMySN+lYudlIH/+BxCmrddpIWA5blvOtB/IMgK6ZyeraPnCbDZlWe0rJYbt6aE5xeBWgJz6UiFbVIqOog9cti6JiFovRtP+VBi3i1KU2ccfFsK1UjzLl/B92SlJE+YGypXyBlI3PeEs8BLDKJ+x9WCj7M/G8vsCD1AHp/haDyx5OsnAzGFeMIp17F6GYBvR4CGdzhRDfe/NuKSQot96PZaaw7+oHAa4MXzItvFKINS7zVaYLasjkTLPfzyauBFYEKySRa8KW573yAc0XBLcQl+klx95SZkCKlu+P22OFG/7wzVOF7m6SWm50V1e7rRy1jc5VGYmMrqX+XrEVmYD66Rr2nsw3dYrRocdwoXXve7dvCBFqCDPldXN31v/qknniAeVherfKbiKwrW+JzQceVuVGj69tKk1KAtu3LbdYZnWOXLWUnRb0/H8IhitsE/d0Ups6IL+XWzoR/hkbIgyvWWab0dFj1KrJD2ZXQ="
 
