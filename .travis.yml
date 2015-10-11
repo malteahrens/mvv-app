@@ -24,9 +24,9 @@ script:
 - git checkout android
 - rm -R mvv-app/www/*
 - ls ../
-- cp -R ../dist ./mvv-app/www
+- cp -R ../dist/* ./app/www/*
 - pwd   
-- git add --all mvv-app/www
+- git add --all app/www
 - git config user.name blibla
 - git config user.email blub@github.com
 - git commit . -m "Android App"
