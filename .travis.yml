@@ -25,7 +25,7 @@ script:
 - rm -R mvv-app/www/* || exit 0
 - ls ../
 - cp -R ../dist/* ./mvv-app/www/*
-- pwd   
+- pwd 
 - git add --all mvv-app/www
 - git config user.name blibla
 - git config user.email blub@github.com
