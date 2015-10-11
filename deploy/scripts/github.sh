@@ -9,8 +9,8 @@ git config --global user.name "Your Name"
 repo=https://malteahrens:${GH_TOKEN}@github.com/malteahrens/mvv-app
 
 # clear and re-create the out directory
-#rm -rf release || exit 0;
-#mkdir release;
+rm -rf release || exit 0;
+mkdir release;
 
 git remote set-url origin $repo
 git status
