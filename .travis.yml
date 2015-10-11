@@ -3,7 +3,7 @@ node_js:
 - '0.10'
 branches:
   only:
-#  - master
+  - master
 before_install:
 - npm install -g npm@2
 - npm install -g grunt-cli
