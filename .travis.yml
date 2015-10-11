@@ -22,7 +22,9 @@ script:
 - cd mvv-app
 - git show-ref
 - git checkout android
-- rm -R mvv-app/www
+- rm -R mvv-app/www/*
+- ls ../
+- cp -R ../dist ./mvv-app/www
 - pwd  
 - git add --all mvv-app/www
 - git config user.name blibla
