@@ -30,6 +30,10 @@ module.exports = function(config) {
             'bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
             'bower_components/angular-vibrator/src/vibrator.js',
             'bower_components/ngCordova/dist/ng-cordova.min.js',
+            'bower_components/d3/d3.js',
+            'bower_components/nvd3/nv.d3.js',
+            'bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
+            'bower_components/keen-js/dist/keen.min.js',
             'app/scripts/**/*.js',
             'test/spec/**/*.js'
         ],
