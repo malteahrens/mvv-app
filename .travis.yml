@@ -33,6 +33,7 @@ script:
   - cd mvv-app
   - git show-ref
   - git checkout android
+  - "rm -R mvv-app/www"
   - ls mvv-app/www
   - pwd  
   - git add --all mvv-app/www
