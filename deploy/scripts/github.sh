@@ -16,5 +16,6 @@ git remote set-url origin $repo
 git status
 ls -lah
 git add release/*
+git config --global push.default simple
 git commit -m "Android release for SDK 22 [ci skip]"
 git push
