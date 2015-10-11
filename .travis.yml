@@ -1,44 +1,49 @@
-language: android
+language: node_js
+node_js:
+  - "0.10"
 
 branches:
   only:
-  - andorid
+  - master
 
-android:
-  components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    - platform-tools
-
-    # The BuildTools version used by your project
-    - build-tools
-
-    # The SDK version used to compile your project
-    - android-22
-
-# install npm
+# install grunt globally
 before_install:
-  - nvm install 0.10
-  - npm install phonegap -g
+  - npm install -g npm@2
+  - npm install -g grunt-cli
+  - npm install -g bower
+
+# install dev dependencies
+install:
+  - npm install
+  - bower install
+
+before_script:
+# remove dist folder from .gitignore file
+  - echo 'remove dist folder from .gitignore'
+  - sed -i '/dist=/d' .gitignore > .gitignore
+  - grunt test
+  - grunt build
 
 script:
-  - phonegap create mvv-app com.example.mvv mvv-app
-  - cd mvv-app
-  - phonegap platform add android
-  - phonegap plugin add org.apache.cordova.device
-  - phonegap plugin add cordova-plugin-vibration
-  - phonegap plugin add cordova-plugin-device-orientation
-  - phonegap plugin add cordova-plugin-network-information
-  - phonegap plugin add cordova-plugin-geolocation
-  - phonegap build
-  - '/bin/cp -rf platforms/android/build/outputs/apk/*.apk ../release'
-  - cd ..
+  # copy dist folder to gh-pages branch
+  - ./deploy/scripts/github.sh
 
-  # copy apk to release folder
-  - sh ./deploy/scripts/github.sh
+  # copy gh-pages branch to phonegap www folder in mobile branch which will trigger apk generation
+  - git clone --depth=50 --branch=android https://malteahrens:${GH_TOKEN}@github.com/malteahrens/mvv-app
+  - cd mvv-app
+  - git show-ref
+  - git checkout mobile
+  #- ls mapdis/www
+  #- pwd
+  #- git add --all mapdis/www
+  #- git config user.name blibla
+  #- git config user.email blub@github.com
+  #- git commit . -m "Android App"
+  #- git config --global push.default simple
+  #- git push
 
 env:
   global:
-    # this is for Travis to be able to push back to github
+    # this is for Travis to be able to push to github to assemble gh-branch
     - secure: "P0SFVXYMJhNb3dX/Hx4rxjL/toViP0Vo0yXbMK/vwOsSrixkU84ltMGykBYTUztdAFJvsO0xrhKsdPbBmdjEF48emrmoymknxKYPIJ6NL1N6fy0EUoE6o7vBX+agthD/uhSNCJgXRK+giqxP5Htz3BkrU9VgdFdVrSqU9bsm4Bc="
 
