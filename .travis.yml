@@ -22,7 +22,7 @@ script:
 - cd mvv-app
 - git show-ref
 - git checkout android
-- rm -R mvv-app/www/*
+- rm -R mvv-app/www/* || exit 0
 - ls ../
 - cp -R ../dist/* ./mvv-app/www/*
 - pwd   
