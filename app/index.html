@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+      <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=yes' />
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+      <!-- build:css(.tmp) styles/main.css -->
+      <link rel="stylesheet" href="styles/main.css">
+      <link rel="stylesheet" href="styles/pygment_trac.css">
+      <!-- endbuild -->
+  </head>
+  <body ng-app="angularApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="wrapper" ng-controller="MainCtrl">
+        <header>
+            <h1 translate="APP_HEADLINE"></h1>
+            <p translate="SUB_HEADLINE"></p>
+			<p><img ng-src="{{imgSrc}}" width="150px" fade-in /></p>
+        </header>
+        <section>
+            <div mouseover="images/angular.png">
+                <h1 translate="HEADING1"></h1>
+                <p translate="PARA1"></p>
+            </div>
+            <div ng-controller="KeenCtrl">
+                <div id="count"></div>
+                <!--<div ng-controller="ExampleCtrl">
+                    <nvd3-line-chart
+                        data="exampleData"
+                        showXAxis="false"
+                        showYAxis="false"
+                        tooltips="true"
+                        interactive="true">
+                    </nvd3-line-chart>-->
+                </div>
+            </div>
+        </section>
+        <footer>
+            <ul ng-controller="LangCtrl">
+                <a href="" ng-click="changeLang('en_US')">Englisch</a> | <a href="" ng-click="changeLang('de_DE')">German</a>
+            </ul>
+        </footer>
+    </div>
+
+    <!-- build:js(.) scripts/oldieshim.js -->
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.js"></script>
+    <![endif]-->
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    <script src="bower_components/angular-vibrator/src/vibrator.js"></script>
+    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/nvd3/nv.d3.js"></script>
+    <script src="bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+    <script src="bower_components/keen-js/dist/keen.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/fix/scale.fix.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/lang.js"></script>
+    <script src="scripts/directives/mouseover.js"></script>
+    <script src="scripts/services/cordova.js"></script>
+    <script src="scripts/services/geolocation.js"></script>
+    <script src="scripts/controllers/map.js"></script>
+    <script src="scripts/controllers/vibration.js"></script>
+    <script src="scripts/controllers/cordovaCtrl.js"></script>
+    <script src="scripts/controllers/nvd3.js"></script>
+    <script src="scripts/controllers/keen.js"></script>
+    <!-- endbuild -->
+
+    <link href='scripts/lib/mapbox-gl.css' rel='stylesheet' />
+    <script src="scripts/lib/mapbox-gl.js"></script>
+    <script src="scripts/lib/javascript.util.js"></script>
+</body>
+</html>
