@@ -34,7 +34,7 @@ script:
   - git show-ref
   - git checkout android
   - ls mvv-app/www
-  - pwd 
+  - pwd  
   - git add --all mvv-app/www
   - git config user.name blibla
   - git config user.email blub@github.com
