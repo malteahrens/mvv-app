@@ -14,19 +14,11 @@ angular.module('angularApp')
         	var count = new Keen.Query("count", {
 			  eventCollection: "notifications_start"
 			});
-			/**client.draw(count, document.getElementById("count"), {
+			client.draw(count, document.getElementById("count"), {
 			  chartType: "metric",
 			  title: "Ausfälle in diesem Monat",
 			  colors: ["#49c5b1"]
-			});**/
-            client.run(count, function(err, res){
-                if (err) {
-                    alert(err)
-                }
-                else {
-                    alert(res.result)
-                }
-    	  	});
+			});
     });
 }]);
 
