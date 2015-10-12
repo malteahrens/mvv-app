@@ -35,10 +35,10 @@ angular
 
     // englische Sprache
     $translateProvider.translations('en_US', {
-        APP_HEADLINE:  'MVV Munich',
-        SUB_HEADLINE: '',
+        APP_HEADLINE:  'Job Application',
+        SUB_HEADLINE: 'Master of Cartography',
         PARA2: 'English Translation',
-        HEADING1:      'Statistics'
+        HEADING1:      'Nothing here'
     });
 
     // Default Language
@@ -54,4 +54,3 @@ angular
 
     vibratorProvider.setSequences(sequences);
   });
-

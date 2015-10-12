@@ -25,11 +25,16 @@
 
     <!-- Add your site or application content here -->
     <div class="wrapper" ng-controller="MainCtrl">
-        <header>
-            <h1 translate="APP_HEADLINE"></h1>
-            <p translate="SUB_HEADLINE"></p>
-			<p><img ng-src="{{imgSrc}}" width="150px" fade-in /></p>
-        </header>
+<header>
+        <h1>MVV München</h1>
+        <p></p>
+        <p ng-controller="LangCtrl">
+                    <a href="" ng-click="changeLang('en_US')">Englisch</a> | <a href="" ng-click="changeLang('de_DE')">German</a>
+        </p>
+        <ul>
+          <li style="border-right-width: 0px;"><img ng-src="{{imgSrc}}" width="150px" fade-in /></li>
+        </ul>
+      </header>
         <section>
             <div mouseover="images/angular.png">
                 <h1 translate="HEADING1"></h1>
@@ -49,9 +54,7 @@
             </div>
         </section>
         <footer>
-            <ul ng-controller="LangCtrl">
-                <a href="" ng-click="changeLang('en_US')">Englisch</a> | <a href="" ng-click="changeLang('de_DE')">German</a>
-            </ul>
+
         </footer>
     </div>
 
