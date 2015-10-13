@@ -11,12 +11,12 @@ angular.module('angularApp')
 
 
         Keen.ready(function(){
-            var interval = "every_:minute"
-            var timeframe = "last_30_days"
+            var interval = "every_minute"
+            var timeframe = "hourly"
 
             // count reports published on s-bahn-muenchen.de
             var count = new Keen.Query("count", {
-                eventCollection: "notifications_start"
+                eventCollection: "notifications_start",
             });
             client.draw(count, document.getElementById("count"), {
                 chartType: "metric",
@@ -25,7 +25,7 @@ angular.module('angularApp')
             });
 
             // count reports published on s-bahn-muenchen.de
-            var averageDelaysToday = new Keen.Query("sum", {
+            var averageDelaysToday = new Keen.Query("average", {
                 eventCollection: "statistics",
                 targetProperty: "totalNumberOfDelays"
             });
@@ -36,18 +36,21 @@ angular.module('angularApp')
             });
 
             // statistics fromm mvv live
-            var liveStatistics =   new Keen.Query("extraction", {
+            var liveStatistics =   new Keen.Query("average", {
                 eventCollection: "statistics",
                 targetProperty: "totalNumberOfDelays",
-                timeframe: "this_1_months",
+                timeframe: "this_2_days",
+                interval: "hourly",
                 timezone: "UTC"
             });
              client.draw(liveStatistics, document.getElementById("liveStatistics"), {
                 chartType: "linechart",
-                title: "Verspätungen",
+                title: "Durchschnittliche Verspätung",
                 colors: ["#49c5b1"],
+                height: 400,
+                labels: ['test'],
                 chartOptions: {
-                    isStacked: true
+                    curveType: 'function'
                 }
             });
         });
