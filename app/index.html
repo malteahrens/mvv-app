@@ -42,7 +42,11 @@
             </div>
             <div ng-controller="KeenCtrl">
                 <div id="count"></div>
-                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S1&style=test" height="600" width="100%" frameborder="0">
+                <p>Zählt die Meldungen zur <a href="http://www.s-bahn-muenchen.de/s_muenchen/view/service/aktuelle_betriebslage.shtml" target="_blank">Aktuelle Betriebslage</a> für diesen Monat. Die Meldungen werden alle 10 Minuten überprüft.</p>
+                <div id="averageDelaysToday"></div>
+                <p>Diese Statistik ruft jede halbe Stunde die Daten vom <a href="http://s-bahn-muenchen.hafas.de/bin/540/help.exe/dn?tpl=livefahrplan" target="_blank">Live Fahreplan</a> ab, addiert die Verspätungen aller fahrenden Züge und bildet daraus den heutigen Durchschnitt.</p>
+                <div id="liveStatistics"></div>
+                    <!--<iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S1&style=test" height="600" width="100%" frameborder="0">
                     </iframe>
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S2&style=test" height="600" width="100%" frameborder="0">
                     </iframe>
@@ -55,7 +59,7 @@
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S7&style=test" height="600" width="100%" frameborder="0">
                     </iframe>
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S8&style=test" height="600" width="100%" frameborder="0">
-                    </iframe>
+                    </iframe>-->
                 <!--<div ng-controller="ExampleCtrl">
                     <nvd3-line-chart
                         data="exampleData"
