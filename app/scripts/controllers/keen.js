@@ -14,15 +14,33 @@ angular.module('angularApp')
             var interval = "every_minute"
             var timeframe = "hourly"
 
-            // count reports published on s-bahn-muenchen.de
-            var count = new Keen.Query("count", {
+            var chart = new Keen.Dataviz();
+            chart
+              .el(document.getElementById("count"))
+              .colors(["#49c5b1"])
+              .title("Meldungen heute")
+              .prepare();
+
+            var query = new Keen.Query("count", {
                 eventCollection: "notifications_start",
+                timeframe: "this_1_days"
             });
-            client.draw(count, document.getElementById("count"), {
-                chartType: "metric",
-                title: "Meldungen in diesem Monat",
-                colors: ["#49c5b1"]
+
+            var req = client.run(query, function(err, res){
+              if (err) {
+                chart.error(err.message);
+              }
+              else {
+                chart
+                  .parseRequest(this)
+                  .title("Meldungen in diesem Monat")
+                  .render();
+              }
             });
+            setInterval(function() {
+                req.refresh();
+              }, 1000 * 60 * 15);
+
 
             // count reports published on s-bahn-muenchen.de
             var averageDelaysToday = new Keen.Query("average", {
@@ -35,22 +53,60 @@ angular.module('angularApp')
                 colors: ["#49c5b1"]
             });
 
-            // statistics fromm mvv live
-            var liveStatistics =   new Keen.Query("average", {
+            // statistics from mvv live
+            var liveDelays = new Keen.Query("median", {
                 eventCollection: "statistics",
                 targetProperty: "totalNumberOfDelays",
                 timeframe: "this_2_days",
                 interval: "hourly",
                 timezone: "UTC"
             });
-             client.draw(liveStatistics, document.getElementById("liveStatistics"), {
-                chartType: "linechart",
-                title: "Durchschnittliche Verspätung",
-                colors: ["#49c5b1"],
-                height: 400,
-                labels: ['test'],
-                chartOptions: {
-                    curveType: 'function'
+
+            var liveTrains = new Keen.Query("median", {
+                eventCollection: "statistics",
+                targetProperty: "totalNumberOfTrains",
+                timeframe: "this_2_days",
+                interval: "hourly",
+                timezone: "UTC"
+            });
+
+            viz = new Keen.Dataviz()
+            .el(document.getElementById('liveStatistics'))
+            .colors(["#49c5b1", "#ff0000"])
+            .height(300)
+            .chartType("linechart")
+            .chartOptions({
+                legend:'bottom', 
+                curveType: 'function',
+                chartArea: {
+                    width: '85%',
+                    height: '80%'
+                }
+            })
+            .prepare();
+
+            client.run([liveDelays, liveTrains], function(error, response){ // run the queries
+                var result1 = response[0].result  // data from first query
+                var result2 = response[1].result  // data from second query
+                var data = []  // place for combined results
+                var i=0
+
+                while (i < result1.length) {
+
+                    data[i]={ // format the data so it can be charted
+                        timeframe: result1[i]["timeframe"],
+                        value: [
+                            { category: "∑ Verspätungen in Minuten", result: result1[i]["value"] },
+                            { category: "∑ Züge", result: result2[i]["value"] }
+                        ]
+                    }
+                    if (i == result1.length-1) { // chart the data
+
+                       viz
+                          .data({result: data})
+                          .render();
+                    }
+                    i++;
                 }
             });
         });
