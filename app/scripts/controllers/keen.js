@@ -8,19 +8,23 @@ angular.module('angularApp')
             host: "api.keen.io/3.0",            // String (optional)
             requestType: "jsonp"                // String (optional: jsonp, xhr, beacon)
         });
-
+        $scope.totalLiveDelay = 0;
         $scope.requestLive = function() {
-            console.log("adff");
-            var url = 'http://s-bahn-muenchen.hafas.de/bin/540/query.exe/dny?&look_minx=10744745&look_maxx=12440389&look_miny=47825027&look_maxy=48406811&tpl=trains2json&look_productclass=17&look_json=yes&performLocating=1&look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&unique=1444761619000&';
-$http.get(url).
-  then(function(response) {
-    // this callback will be called asynchronously
-    // when the response is available
-    $scope.responseArray = response.data;
- }, function(response) {
-    // called asynchronously if an error occurs
-    // or server returns response with an error status.
- });
+            var url = 'https://cors-mvv.herokuapp.com/bin/540/query.exe/dny?look_minx=10744745&look_maxx=12440389&look_miny=47825027&look_maxy=48406811&tpl=trains2json&look_productclass=17&look_json=yes&performLocating=1&look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&unique=1444761619000&';
+            $http({
+                method: 'GET',
+                url: url
+            }).then(function successCallback(response) {
+                var totalLiveDelay = 0;
+                for (i = 0; i < response.data.look.trains.length; i++) {
+                    totalLiveDelay += parseInt(response.data.look.trains[i].delay);
+                }
+                $scope.totalLiveDelay = totalLiveDelay;
+                console.log(totalLiveDelay);
+            }, function errorCallback(response) {
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+            });
         }
 
         Keen.ready(function(){
@@ -51,8 +55,8 @@ $http.get(url).
               }
             });
             setInterval(function() {
-                req.refresh();
-              }, 1000 * 60 * 15);
+                $scope.requestLive()
+              }, 1000 * 60);
 
 
             // count reports published on s-bahn-muenchen.de
