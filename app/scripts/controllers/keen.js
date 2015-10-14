@@ -48,9 +48,8 @@ angular.module('angularApp')
                 title: "Durchschnittliche Verspätung",
                 colors: ["#49c5b1"],
                 height: 400,
-                labels: ['test'],
+                labels: [],
                 chartOptions: {
-                    curveType: 'function'
                 }
             });
         });
