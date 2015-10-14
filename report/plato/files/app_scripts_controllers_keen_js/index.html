@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">59.08</p>
+      <p class="stat">63.72</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">112</p>
+      <p class="stat">125</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">17.74</p>
+      <p class="stat">17.67</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">0.90</p>
+      <p class="stat">1.01</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 <div class="container">
   <div class="row">
     <textarea id="file-source" class="col-md-12">angular.module(&#039;angularApp&#039;)
-    .controller(&#039;KeenCtrl&#039;, [ &#039;$scope&#039;, function($scope) {
+    .controller(&#039;KeenCtrl&#039;, [ &#039;$scope&#039;, &#039;$http&#039;, function($scope, $http) {
         var client = new Keen({
             projectId: &quot;561925d196773d74b138cefd&quot;, // String (required always)
             readKey: &quot;363fa49e3c02ebb483fb0dd2f219a9347243c32562720fd877abd34e206a545bb7923dc478beb1f18be28ab3459338b41946d3288768d6e33b8c883c8592cc3b439dc09330b6f7a1f27e1a9c152db2079ede12b53204e91e547350dcf02fdd7abcd671dc0291a68d94f2798639e40a89&quot;,   // String (required for querying data)
@@ -99,6 +99,19 @@
             requestType: &quot;jsonp&quot;                // String (optional: jsonp, xhr, beacon)
         });
 
+        $scope.requestLive = function() {
+            console.log(&quot;adff&quot;);
+            var url = &#039;http://s-bahn-muenchen.hafas.de/bin/540/query.exe/dny?&amp;look_minx=10744745&amp;look_maxx=12440389&amp;look_miny=47825027&amp;look_maxy=48406811&amp;tpl=trains2json&amp;look_productclass=17&amp;look_json=yes&amp;performLocating=1&amp;look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&amp;unique=1444761619000&amp;&#039;;
+$http.get(url).
+  then(function(response) {
+    // this callback will be called asynchronously
+    // when the response is available
+    $scope.responseArray = response.data;
+ }, function(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+ });
+        }
 
         Keen.ready(function(){
             var interval = &quot;every_minute&quot;
