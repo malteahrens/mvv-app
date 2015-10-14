@@ -1,6 +1,6 @@
 
 angular.module('angularApp')
-    .controller('KeenCtrl', [ '$scope', function($scope) {
+    .controller('KeenCtrl', [ '$scope', '$http', function($scope, $http) {
         var client = new Keen({
             projectId: "561925d196773d74b138cefd", // String (required always)
             readKey: "363fa49e3c02ebb483fb0dd2f219a9347243c32562720fd877abd34e206a545bb7923dc478beb1f18be28ab3459338b41946d3288768d6e33b8c883c8592cc3b439dc09330b6f7a1f27e1a9c152db2079ede12b53204e91e547350dcf02fdd7abcd671dc0291a68d94f2798639e40a89",   // String (required for querying data)
@@ -9,6 +9,19 @@ angular.module('angularApp')
             requestType: "jsonp"                // String (optional: jsonp, xhr, beacon)
         });
 
+        $scope.requestLive = function() {
+            console.log("adff");
+            var url = 'http://s-bahn-muenchen.hafas.de/bin/540/query.exe/dny?&look_minx=10744745&look_maxx=12440389&look_miny=47825027&look_maxy=48406811&tpl=trains2json&look_productclass=17&look_json=yes&performLocating=1&look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&unique=1444761619000&';
+$http.get(url).
+  then(function(response) {
+    // this callback will be called asynchronously
+    // when the response is available
+    $scope.responseArray = response.data;
+ }, function(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+ });
+        }
 
         Keen.ready(function(){
             var interval = "every_minute"
