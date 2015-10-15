@@ -87,7 +87,7 @@ angular.module('angularApp')
                 timezone: "UTC"
             });
 
-            viz = new Keen.Dataviz()
+            var viz = new Keen.Dataviz()
             .el(document.getElementById('liveStatistics'))
             .colors(["#49c5b1", "#ff0000"])
             .height(300)
