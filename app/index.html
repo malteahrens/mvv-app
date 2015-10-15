@@ -27,9 +27,8 @@
     <div class="wrapper" ng-controller="MainCtrl">
 <header>
         <h1>MVV München</h1>
-        <p></p>
         <p ng-controller="LangCtrl">
-                    <a href="" ng-click="changeLang('en_US')">Englisch</a> | <a href="" ng-click="changeLang('de_DE')">German</a>
+            <a href="" ng-click="changeLang('en_US')">Englisch</a> | <a href="" ng-click="changeLang('de_DE')">German</a>
         </p>
         <ul>
           <li style="border-right-width: 0px;"><img ng-src="{{imgSrc}}" width="150px" fade-in /></li>
@@ -40,14 +39,18 @@
                 <h1 translate="HEADING1"></h1>
                 <p translate="PARA1"></p>
             </div>
+            <p ng-controller="StatCtrl">
+              <button style="text-align: center;" ng-click="changeStatInterval('monthly')">Monat</button>
+              <button style="text-align: center;" ng-click="changeStatInterval('dayly')">Tag</button>
+              <button style="text-align: center;" ng-click="changeStatInterval('live')">Live</button>
+            </p>
             <div ng-controller="KeenCtrl">
-                <div id="count"></div>
-                <p>Zählt die Meldungen zur <a href="http://www.s-bahn-muenchen.de/s_muenchen/view/service/aktuelle_betriebslage.shtml" target="_blank">Aktuelle Betriebslage</a> für diesen Monat. Die Seite wird alle 10 Minuten auf neue Meldungen überprüft.</p>
-                <div id="averageDelaysToday"></div>
-                <p>Diese Statistik ruft jede halbe Stunde die Daten vom <a href="http://s-bahn-muenchen.hafas.de/bin/540/help.exe/dn?tpl=livefahrplan" target="_blank">Live Fahreplan</a> ab, addiert die Verspätungen aller fahrenden Züge und bildet daraus den heutigen Durchschnitt.</p>
-                <button ng-click="requestLive()">Update</button><div>{{totalLiveDelay}}</div>
+                <div id="countReports"></div>
+                <p>Zählt die Meldungen zur <a href="http://www.s-bahn-muenchen.de/s_muenchen/view/service/aktuelle_betriebslage.shtml" target="_blank">Aktuelle Betriebslage</a>. Auf der linken Seite kannst du auswählen, ob du den Durchnitt für diesen <strong>Monat</strong>, <strong>heute</strong>, oder die aktuelle Anzahl an Meldungen sehen willst (<strong>live</strong>). Die Auswahl gilt auch für die restlichen Statistiken.</p>
+                <div id="averageDelays"></div>
+                <p>Diese Statistik analysiert die Daten vom <a href="http://s-bahn-muenchen.hafas.de/bin/540/help.exe/dn?tpl=livefahrplan" target="_blank">Live Fahreplan</a>. Es werden die Verspätungen aller fahrenden Züge addiert und daraus der Durchschnitt gebildet.</p>
                 <div id="liveStatistics"></div>
-                <p>Ähnlich zu der letzten Statistik, allerdings im zeitlichen Verlauf für den letzten Monat.</p>
+                <p>Summe der durchschnittlichen Verspätungen aller Züge im zeitlichen Verlauf.</p>
                     <!--<iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S1&style=test" height="600" width="100%" frameborder="0">
                     </iframe>
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S2&style=test" height="600" width="100%" frameborder="0">
@@ -122,7 +125,9 @@
     <script src="scripts/controllers/vibration.js"></script>
     <script src="scripts/controllers/cordovaCtrl.js"></script>
     <script src="scripts/controllers/nvd3.js"></script>
-    <script src="scripts/controllers/keen.js"></script>
+    <script src="scripts/components/statistics/keen.controller.js"></script>
+    <script src="scripts/components/statistics/statistic.service.js"></script>
+    <script src="scripts/components/statistics/statistic.controller.js"></script>
     <!-- endbuild -->
 
     <link href='scripts/lib/mapbox-gl.css' rel='stylesheet' />
