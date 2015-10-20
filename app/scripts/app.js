@@ -21,7 +21,8 @@ angular
     'angular-vibrator',
     'geolocation',
     'ngCordova',
-    'nvd3ChartDirectives',
+    'nvd3',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider, $translateProvider, vibratorProvider) {
 

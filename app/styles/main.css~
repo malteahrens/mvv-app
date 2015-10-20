@@ -114,17 +114,7 @@ header ul {
 
     padding:0;
 
-    background: #eee;
-    background: -moz-linear-gradient(top, #f8f8f8 0%, #dddddd 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#dddddd));
-    background: -webkit-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-    background: -o-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-    background: -ms-linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-    background: linear-gradient(top, #f8f8f8 0%,#dddddd 100%);
-
     border-radius:5px;
-    border:1px solid #d2d2d2;
-    box-shadow:inset #fff 0 1px 0, inset rgba(0,0,0,0.03) 0 -1px 0;
     width:270px;
 }
 
@@ -269,4 +259,13 @@ footer {
 @keyframes opacity {
     from { opacity:0.4; }
     to { opacity:1; }
+}
+
+.keen-metric {
+  background: #49c5b1 none repeat scroll 0 0;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  padding: 10px 0;
+  text-align: center;
 }

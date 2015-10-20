@@ -32,8 +32,9 @@ module.exports = function(config) {
             'bower_components/ngCordova/dist/ng-cordova.min.js',
             'bower_components/d3/d3.js',
             'bower_components/nvd3/nv.d3.js',
-            'bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js',
             'bower_components/keen-js/dist/keen.min.js',
+            'bower_components/angular-nvd3/dist/angular-nvd3.min.js',
+            'bower_components/angular-bootstrap/ui-bootstrap.min.js',
             'app/scripts/**/*.js',
             'test/spec/**/*.js'
         ],

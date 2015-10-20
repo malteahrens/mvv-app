@@ -1,0 +1,38 @@
+angular.module('angularApp')
+.service('MapSrvc', ['StatSrvc', function(StatSrvc) {
+	// set up the map
+	map = new L.Map('map');
+
+	// create the tile layer with correct attribution
+	var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+	var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 12, attribution: osmAttrib});		
+
+	// start the map in South-East England
+	map.setView(new L.LatLng(48.135125, 11.581981),11);
+	map.addLayer(osm);
+
+    var addressPoints = [];
+
+    var heat = L.heatLayer(addressPoints, {maxZoom: 18}).addTo(map);
+    var draw = true;
+
+    // add points on mouse move (except when interacting with the map)
+    map.on({
+        movestart: function () { draw = false; },
+        moveend:   function () { draw = true; },
+        mousemove: function (e) {
+            if (draw) {
+                heat.addLatLng(e.latlng);
+            }
+        }
+    })
+
+    var callback = {
+        id: 'map.service.js',
+        notify: function(value, operation) {
+            //MvvSrvc.requestLive();
+        }   
+    }
+    StatSrvc.registerOberserver(callback);
+}]);
