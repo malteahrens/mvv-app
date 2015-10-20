@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Plato - app/scripts/components/api/mvv.service.js</title>
+  <title>Plato - app/scripts/components/statistics/statistic.model.js</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
@@ -36,7 +36,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>app/scripts/components/api/mvv.service.js</h1>
+    <h1>app/scripts/components/statistics/statistic.model.js</h1>
   </div>
 </div>
 
@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">70.53</p>
+      <p class="stat">70.88</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">48</p>
+      <p class="stat">103</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">17.51</p>
+      <p class="stat">19.29</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">0.38</p>
+      <p class="stat">0.68</p>
     </div>
   </div>
 </div>
@@ -90,53 +90,108 @@
 <div class="container">
   <div class="row">
     <textarea id="file-source" class="col-md-12">angular.module(&#039;angularApp&#039;)
-.service(&#039;MvvSrvc&#039;, [ &#039;$http&#039;, &#039;$interval&#039;, &#039;StatModel&#039;, &#039;MapModel&#039;, function($http, $interval, StatModel, MapModel) {
-    var url = &#039;https://cors-mvv.herokuapp.com/bin/540/query.exe/dny?look_minx=10744745&amp;look_maxx=12440389&amp;look_miny=47825027&amp;look_maxy=48406811&amp;tpl=trains2json&amp;look_productclass=16&amp;look_json=yes&amp;performLocating=1&amp;look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&amp;unique=1444761619000&amp;&#039;;
-    var requestLive = function() {
-        $http({
-            method: &#039;GET&#039;,
-            url: url
-        }).then(function successCallback(response) {
-            var totalLiveDelay = 0;
-            for (i = 0; i &lt; response.data.look.trains.length; i++) {
-                var delay = parseInt(response.data.look.trains[i].delay);
-                totalLiveDelay += delay;
-                if(delay &gt; 2) {
-                    MapModel.addData(response.data.look.trains[i]);
-                }
-            }
-            var dateTime = new Date();
-            StatModel.addData({
-                label: +dateTime,
-                value: totalLiveDelay
-            });
-        }, function errorCallback(response) {
-            console.log(&quot;error&quot;);
+.service(&#039;StatModel&#039;, function() {
+    var observerCallbacks = [];
+    var registerOberserver = function(callback) {
+        console.log(&quot;register callback for &quot;+callback.id);
+        observerCallbacks.push(callback);
+    };
+    var notifyObserver = function(value, operation) {
+        angular.forEach(observerCallbacks, function(callback) {
+            console.log(&quot;notify observer &quot;+callback.id+&quot; about change &quot;+operation);
+            console.log(value);
+            callback.notify(value, operation);
         });
-    } 
-
-    var operations = {
-        requestLive: requestLive    
-    }
-
-    var stop;
-    var startPolling = function(pollingInterval) {
-        if ( angular.isDefined(stop) ) return;
-        stop = $interval(requestLive, pollingInterval, 100);
-    }
-
-    var stopPolling = function() {
-        if (angular.isDefined(stop)) {
-            $interval.cancel(stop);
-            stop = undefined;
+    };
+    
+    var timeframe = &quot;this_1_day&quot;;
+    var statisticsInterval = {
+        &#039;monthly&#039;: {
+            timeframe: &quot;this_1_month&quot;,
+            timeframeName: &quot;Monat&quot;,
+            interval: &quot;every_day&quot;
+        },
+        &quot;dayly&quot;: {
+            timeframe: &quot;this_1_day&quot;,
+            timeframeName: &quot;Heute&quot;,
+            interval: &quot;every_hour&quot;            
+        },
+        &quot;hourly&quot;: {
+            timeframe: &quot;this_1_hour&quot;,
+            timeframeName: &quot;Stunde&quot;,
+            interval: &quot;every_minute&quot;
+        },
+        &quot;live&quot; : {
+            pollingInterval: 1000 * 5,
+            timeframe: &quot;this_1_hour&quot;,
+            timeframeName: &quot;Stunde&quot;,
+            interval: &quot;every_minute&quot;
         }
+    };
+
+    var countReports = 0;
+    var totalNumberOfDelays = 0;
+
+    var getTotalNumberOfDelays = function() {
+        return totalNumberOfDelays;    
+    }
+
+    var getCountReports = function(value) {
+
+        return countReports; 
+    }
+
+    var setTotalNumberOfDelays = function(value) {
+        totalNumberOfDelays = value;
+        notifyObserver(totalNumberOfDelays, &#039;totalNumberOfDelays&#039;);
+    }
+
+    var setCountReports = function(value) {
+        countReports = value;
+        notifyObserver(countReports, &#039;countReports&#039;);
+    }
+
+    var data = []
+    var getData = function() {
+        return filter(data);
+    }
+    var setData = function(dataSet) {
+        data = dataSet;
+        notifyObserver(data, &#039;dataSet&#039;); 
+    }
+
+    var addData = function(dataToAdd) {
+        if(!liveMode) {
+            liveMode = true;
+            data[0].values = [];
+        }
+        data[0].values.push(dataToAdd);    
+        notifyObserver(dataToAdd, &#039;dataAdd&#039;); 
+    }
+
+    var setInterval = function(interval) {
+        console.log(interval);
+        notifyObserver(statisticsInterval[interval], &#039;intervalChange&#039;);
+    }
+
+    var filter = function(data) {
+        var d = new Date();
+        d.setDate(d.getDate() - 1);
+        return data;
     }
 
     return {
-        startPolling: startPolling,
-        stopPolling: stopPolling
-    }
-}]);</textarea>
+        registerOberserver: registerOberserver,
+        getData: getData,
+        setData: setData,
+        addData: addData,
+        setInterval: setInterval,
+        countReports: getCountReports,
+        TotalNumberOfDelays: getTotalNumberOfDelays,
+        setCountReports: setCountReports,
+        setTotalNumberOfDelays: setTotalNumberOfDelays
+    };
+});</textarea>
   </div>
 </div>
 
