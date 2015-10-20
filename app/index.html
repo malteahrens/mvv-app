@@ -43,14 +43,11 @@
             <div ng-controller="KeenCtrl">
                 <div ng-controller="ButtonsCtrl" style="width: 100%;">
                     <div class="btn-group">
-                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Left'">Monat</label>
-                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Middle'">Tag</label>
-                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'Right'">Live</label>
+                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'monthly'">Monat</label>
+                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'dayly'">Tag</label>
+                        <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'live'">Live</label>
                     </div>
                 </div>
-              <button style="text-align: center;" ng-click="changeStatInterval('monthly')">Monat</button>
-              <button style="text-align: center;" ng-click="changeStatInterval('dayly')">Tag</button>
-              <button style="text-align: center;" ng-click="changeStatInterval('live')">Live</button>
                 <div title="2" style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric"><span class="keen-metric-value" ng-cloak>{{countReports}}</span><span class="keen-metric-title" ng-cloak>∑ Meldungen / {{timeframeName}}</span></div>
                 <p>Zählt die Meldungen zur <a href="http://www.s-bahn-muenchen.de/s_muenchen/view/service/aktuelle_betriebslage.shtml" target="_blank">Aktuelle Betriebslage</a>. Auf der linken Seite kannst du auswählen, ob du den Durchnitt für diesen <strong>Monat</strong>, <strong>heute</strong>, oder die aktuelle Anzahl an Meldungen sehen willst (<strong>live</strong>). Die Auswahl gilt auch für die restlichen Statistiken.</p>
                 <div title="86.183908045977" style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric"><span class="keen-metric-value">{{totalNumberOfDelays}}</span><span class="keen-metric-title">Ø Minuten / {{timeframeName}}</span></div>
@@ -109,8 +106,7 @@
     <script src="bower_components/nvd3/nv.d3.js"></script>
     <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
     <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-    <link href='bower_components/angular-bootstrap/ui-bootstrap-csp.css' rel='stylesheet' />
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -130,12 +126,14 @@
     <script src="scripts/controllers/cordovaCtrl.js"></script>
     <script src="scripts/controllers/nvd3.js"></script>
     <script src="scripts/components/statistics/keen.controller.js"></script>
+    <script src="scripts/components/statistics/statistic.model.js"></script>
     <script src="scripts/components/statistics/statistic.service.js"></script>
     <script src="scripts/components/statistics/statistic.controller.js"></script>
     <script src="scripts/components/map/map.controller.js"></script>
     <script src="scripts/components/map/map.service.js"></script>
     <script src="scripts/components/map/map.model.js"></script>
     <script src="scripts/components/api/mvv.service.js"></script>
+    <script src="scripts/components/api/keen.service.js"></script>
     <script src="scripts/components/buttons/buttons.controller.js"></script>
     <!-- endbuild -->
 

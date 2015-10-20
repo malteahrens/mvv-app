@@ -1,5 +1,5 @@
 angular.module('angularApp')
-.service('KeenSrvc', [ '$http', '$interval', 'StatSrvc', 'MapModel', function($http, $interval, StatSrvc, MapModel) {
+.service('KeenSrvc', [ '$http', '$interval', 'StatModel', function($http, $interval, StatModel) {
     var clientProperties = {
         projectId: "561925d196773d74b138cefd", // String (required always)
         readKey: "363fa49e3c02ebb483fb0dd2f219a9347243c32562720fd877abd34e206a545bb7923dc478beb1f18be28ab3459338b41946d3288768d6e33b8c883c8592cc3b439dc09330b6f7a1f27e1a9c152db2079ede12b53204e91e547350dcf02fdd7abcd671dc0291a68d94f2798639e40a89",   // String (required for querying data)
@@ -16,14 +16,12 @@ angular.module('angularApp')
              },
              data: query
         }
-        $scope.countReports = "~ ~ ~"
-        $scope.totalNumberOfDelays = "~ ~ ~"
         $http(req).success(function(data, status) {
             if(query.id === 'reportQuery') {
-                $scope.countReports = data.result;
+                StatModel.setCountReports(data.result);
             }
             if(query.id === 'delaysQuery') {
-                $scope.totalNumberOfDelays = data.result;
+                StatModel.setTotalNumberOfDelays(data.result);
             }
             if(query.id === 'liveDelaysQuery') {
                 var i=0
@@ -35,7 +33,7 @@ angular.module('angularApp')
                         values.push({label: +dateTime, value: data.result[i]["value"]})
                     }
                     if (i == data.result.length-1) { // chart the data
-                        StatSrvc.setData([{
+                        StatModel.setData([{
                             key: "∑ Verspätungen in Minuten",
                             values: values
                         }]);
@@ -47,12 +45,12 @@ angular.module('angularApp')
     }
 
     var stop;
-    var startPolling = function(pollingInterval) {
+    var startPolling = function(query, pollingInterval) {
         if ( angular.isDefined(stop) ) return;
         stop = $interval(requestKeen, pollingInterval, 100);
     }
 
-    var stopPolling = function() {
+    var stopPolling = function(query) {
         if (angular.isDefined(stop)) {
             $interval.cancel(stop);
             stop = undefined;
@@ -61,6 +59,7 @@ angular.module('angularApp')
 
     return {
         startPolling: startPolling,
-        stopPolling: stopPolling
+        stopPolling: stopPolling,
+        execute: requestKeen
     }
 }]);
