@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">70.53</p>
+      <p class="stat">70.58</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">48</p>
+      <p class="stat">46</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">17.51</p>
+      <p class="stat">16.84</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">0.38</p>
+      <p class="stat">0.39</p>
     </div>
   </div>
 </div>
@@ -90,7 +90,7 @@
 <div class="container">
   <div class="row">
     <textarea id="file-source" class="col-md-12">angular.module(&#039;angularApp&#039;)
-.service(&#039;MvvSrvc&#039;, [ &#039;$http&#039;, &#039;$interval&#039;, &#039;StatModel&#039;, &#039;MapModel&#039;, function($http, $interval, StatModel, MapModel) {
+.service(&#039;MvvSrvc&#039;, [ &#039;$http&#039;, &#039;$interval&#039;, &#039;StatModel&#039;, &#039;MapModel&#039;, &#039;MapSrvc&#039;, function($http, $interval, StatModel, MapModel, MapSrvc) {
     var url = &#039;https://cors-mvv.herokuapp.com/bin/540/query.exe/dny?look_minx=10744745&amp;look_maxx=12440389&amp;look_miny=47825027&amp;look_maxy=48406811&amp;tpl=trains2json&amp;look_productclass=16&amp;look_json=yes&amp;performLocating=1&amp;look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&amp;unique=1444761619000&amp;&#039;;
     var requestLive = function() {
         $http({
@@ -113,16 +113,13 @@
         }, function errorCallback(response) {
             console.log(&quot;error&quot;);
         });
-    } 
-
-    var operations = {
-        requestLive: requestLive    
     }
 
     var stop;
     var startPolling = function(pollingInterval) {
         if ( angular.isDefined(stop) ) return;
         stop = $interval(requestLive, pollingInterval, 100);
+        MapSrvc.setLive(true);
     }
 
     var stopPolling = function() {
@@ -130,6 +127,7 @@
             $interval.cancel(stop);
             stop = undefined;
         }
+        MapSrvc.setLive(false);
     }
 
     return {

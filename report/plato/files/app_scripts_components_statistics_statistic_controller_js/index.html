@@ -137,7 +137,7 @@
     $scope.options = {
         chart: {
             type: &#039;lineChart&#039;,
-            height: 450,
+            height: 300,
             margin : {
                 top: 20,
                 right: 20,
@@ -167,7 +167,7 @@
 
     $scope.countReports = StatModel.countReports();
     var callback = {
-        id: &#039;keen.controller.js&#039;,
+        id: &#039;statistic.controller.js&#039;,
         notify: function(value, operation) {
             if(operation === &#039;totalNumberOfDelays&#039;) {
                 $scope.totalNumberOfDelays = value
