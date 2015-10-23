@@ -33,7 +33,6 @@
         </p>
         <ul>
             <li style="border-right-width: 0px;">
-        <img ng-src="{{imgSrc}}" width="150px" fade-in /></li>
         </ul>
     </header>
         <section>
@@ -52,12 +51,14 @@
                 <div class="jumbotron">
                     <nvd3 options='options' data='data' api="api" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
                 </div>
-                <div ng-controller="MapCtrl">
-                    <div class="jumbotron" ng-show="liveMode()">
-                        <div id="map" style="height: 500px;"></div>
-                    <div>
+                <div ng-controller="ButtonsCtrl" style="width: 100%;">
+                    <div class="btn-group btn-group-justified">
+                        <a href="#" class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'monthly'"><</a>
+                        <a href="#" class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'dayly'">^</a>
+                        <a href="#" class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'live'">></a>
+                    </div>
                 </div>
-                <div class="jumbotron">
+                <div class="jumbotron" ng-show="false">
                     <div style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric">
                         <span class="keen-metric-value" ng-cloak>{{countReports}}</span>
                         <span class="keen-metric-title" ng-cloak>∑ Meldungen / {{timeframeName}}</span>
@@ -79,6 +80,11 @@
                     </iframe>
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S8&style=test" height="600" width="100%" frameborder="0">
                     </iframe>-->
+            </div>
+            <div ng-controller="MapCtrl">
+                <div class="jumbotron" ng-show="liveMode()">
+                    <div id="map" style="height: 500px;"></div>
+                <div>
             </div>
         </section>
         <!-- <section>
