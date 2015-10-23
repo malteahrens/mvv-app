@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">70.88</p>
+      <p class="stat">65.73</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">103</p>
+      <p class="stat">135</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">19.29</p>
+      <p class="stat">32.76</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">0.68</p>
+      <p class="stat">1.11</p>
     </div>
   </div>
 </div>
@@ -104,7 +104,10 @@
         });
     };
     
+    var liveMode = false;
     var timeframe = &quot;this_1_day&quot;;
+    var countReports = 0;
+    var totalNumberOfDelays = 0;
     var statisticsInterval = {
         &#039;monthly&#039;: {
             timeframe: &quot;this_1_month&quot;,
@@ -129,15 +132,11 @@
         }
     };
 
-    var countReports = 0;
-    var totalNumberOfDelays = 0;
-
     var getTotalNumberOfDelays = function() {
         return totalNumberOfDelays;    
     }
 
     var getCountReports = function(value) {
-
         return countReports; 
     }
 
@@ -153,7 +152,10 @@
 
     var data = []
     var getData = function() {
-        return filter(data);
+        console.log(&quot;getData&quot;);
+        var mindate = new Date(2015,9,20);
+        mindate.setTime( mindate.getTime() + mindate.getTimezoneOffset() );
+        return filter(data, mindate);
     }
     var setData = function(dataSet) {
         data = dataSet;
@@ -161,24 +163,54 @@
     }
 
     var addData = function(dataToAdd) {
-        if(!liveMode) {
-            liveMode = true;
-            data[0].values = [];
-        }
+        console.log(dataToAdd);        
         data[0].values.push(dataToAdd);    
-        notifyObserver(dataToAdd, &#039;dataAdd&#039;); 
+        //notifyObserver(dataToAdd, &#039;dataAdd&#039;); 
     }
 
-    var setInterval = function(interval) {
-        console.log(interval);
-        notifyObserver(statisticsInterval[interval], &#039;intervalChange&#039;);
+    var setInterval = function(mode) {
+        if(mode === &#039;live&#039;) {
+            liveMode=true;
+        } else {
+            liveMode=false;        
+        }
+        console.log(&#039;interval mode: &#039;+mode); 
+        notifyObserver(statisticsInterval[mode], &#039;intervalChange&#039;);
     }
 
-    var filter = function(data) {
-        var d = new Date();
-        d.setDate(d.getDate() - 1);
-        return data;
-    }
+    var filterToggle = false;
+    var filter = function(data, mindate) {
+        // early exit if filtering is disabled        
+        if(!filterToggle) {
+            return data;        
+        }
+        console.log(&quot;filter&quot;);
+
+        if(liveMode) {
+            mindate = new Date();
+            mindate.setHours(mindate.getHours() - 1);
+        }
+
+        var maxdate = new Date();
+        maxdate.setHours(23,59,0,0);
+        console.log(maxdate);
+        var result = [];
+        result[0] = {
+            key: &#039;abc&#039;,
+            values: []            
+        }
+        if(data.length&gt;0) {
+            for(var i=0; i&lt;data[0].values.length; i++) {
+                if(mindate.getTime() &lt; data[0].values[i].label &amp;&amp; maxdate.getTime() &gt; data[0].values[i].label) {  
+                    result[0].values.push({
+                        label: data[0].values[i].label,
+                        value: data[0].values[i].value
+                    });
+                }
+            }    
+        }
+        return result;
+    };
 
     return {
         registerOberserver: registerOberserver,

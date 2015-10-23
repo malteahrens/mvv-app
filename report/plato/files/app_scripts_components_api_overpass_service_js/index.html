@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Plato - app/scripts/components/statistics/keen.controller.js</title>
+  <title>Plato - app/scripts/components/api/overpass.service.js</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
@@ -36,7 +36,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>app/scripts/components/statistics/keen.controller.js</h1>
+    <h1>app/scripts/components/api/overpass.service.js</h1>
   </div>
 </div>
 
@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">58.32</p>
+      <p class="stat">93.64</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">121</p>
+      <p class="stat">5</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">14.39</p>
+      <p class="stat">3.19</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">1.03</p>
+      <p class="stat">0.04</p>
     </div>
   </div>
 </div>
@@ -90,125 +90,9 @@
 <div class="container">
   <div class="row">
     <textarea id="file-source" class="col-md-12">angular.module(&#039;angularApp&#039;)
-.controller(&#039;KeenCtrl&#039;, [ &#039;$scope&#039;, &#039;$http&#039;, &#039;$interval&#039;, &#039;StatSrvc&#039;, &#039;$filter&#039;, &#039;MvvSrvc&#039;, &#039;KeenSrvc&#039;, &#039;StatModel&#039;, function($scope, $http, $interval, StatSrvc, $filter, MvvSrvc, KeenSrvc, StatModel) {
-    $scope.interval = &quot;every_hour&quot;;
-    var timeframe = &quot;this_1_day&quot;;
-    $scope.timeframeName = &quot;Heute&quot;;     
-    $scope.totalLiveDelay = 0;
-
-    var reportQuery = {
-        id: &#039;reportQuery&#039;,
-        operation: &quot;count&quot;,
-        event_collection: &quot;notifications_start&quot;,
-        timeframe: timeframe,
-        timezone: &quot;UTC&quot;
-    }
-    var delaysQuery = {
-        id: &#039;delaysQuery&#039;,
-        operation: &quot;count&quot;,
-        event_collection: &quot;statistics&quot;,
-        target_property:  &quot;totalNumberOfDelays&quot;,
-        timeframe: timeframe,
-        timezone: &quot;UTC&quot;
-    }
-
-    var liveDelays = {
-        id: &#039;liveDelaysQuery&#039;,
-        operation: &#039;median&#039;,
-        method: &#039;set&#039;,
-        event_collection: &quot;statistics&quot;,
-        target_property: &quot;totalNumberOfDelays&quot;,
-        timeframe: timeframe,
-        interval: &quot;hourly&quot;,
-        timezone: &quot;UTC&quot;
-    }
-
-    var liveTrains = {
-        id: &#039;liveTrainsQuery&#039;,
-        operation: &#039;median&#039;,
-        event_collection: &quot;statistics&quot;,
-        target_property: &quot;totalNumberOfTrains&quot;,
-        timeframe: timeframe,
-        interval: &quot;hourly&quot;,
-        timezone: &quot;UTC&quot;
-    }
-
-    $scope.data = StatModel.getData();
-    $scope.options = {
-        chart: {
-            type: &#039;lineChart&#039;,
-            height: 450,
-            margin : {
-                top: 20,
-                right: 20,
-                bottom: 60,
-                left: 55
-            },
-            x: function(d){ return d.label; },
-            y: function(d){ return d.value; },
-            showValues: true,
-            valueFormat: function(d){
-                return d3.format(&#039;,.4f&#039;)(d);
-            },
-            transitionDuration: 500,
-            useInteractiveGuideline: true,
-            xAxis: {
-                axisLabelDistance: 30,
-                tickFormat: function(d){
-                    return d3.time.format(&#039;%H:%M&#039;)(new Date(d));
-                }
-            },
-            yAxis: {
-                axisLabel: &#039;Y Axis&#039;,
-                axisLabelDistance: 30
-            }
-        }
-    }    
-
-    $scope.countReports = StatModel.countReports();
-    var callback = {
-        id: &#039;keen.controller.js&#039;,
-        notify: function(value, operation) {
-            if(operation === &#039;totalNumberOfDelays&#039;) {
-                $scope.totalNumberOfDelays = value
-            }
-            if(operation === &#039;countReports&#039;) {
-                $scope.countReports = value
-            }
-            if(operation === &#039;dataSet&#039;) {
-                console.log(&quot;got dataset&quot;);
-                // based on plunker http://plnkr.co/edit/AwkX2FW0GGMzwplyTQMS
-	            $scope.data.length = 0;
-	            Array.prototype.push.apply($scope.data, StatModel.getData());
-            }
-            if(operation === &#039;dataAdd&#039;) {
-                //$scope.data[0].values.push(value);  
-            }
-            if(operation === &#039;intervalChange&#039;) {
-                console.log(&quot;got intervalChange in keen.controller.js&quot;);
-                console.log(value.timeframe);
-                $scope.interval = value.interval;
-                $scope.timeframeName = value.timeframeName;
-
-                reportQuery.timeframe = value.timeframe;
-                delaysQuery.timeframe = value.timeframe;
-                liveDelays.timeframe = value.timeframe;
-                liveTrains.timeframe = value.timeframe;
-
-                if(value.pollingInterval) {
-                    MvvSrvc.startPolling(value.pollingInterval);
-                } else {
-                    MvvSrvc.stopPolling();
-                    $scope.countReports = &quot;~ ~ ~&quot;
-                    $scope.totalNumberOfDelays = &quot;~ ~ ~&quot;
-                    KeenSrvc.execute(reportQuery);
-                    KeenSrvc.execute(delaysQuery);   
-                    KeenSrvc.execute(liveDelays);          
-                }
-            }
-        }   
-    }
-    StatModel.registerOberserver(callback);
+.service(&#039;OverpassSrvc&#039;, [ &#039;$http&#039;, &#039;$interval&#039;, &#039;StatModel&#039;, &#039;MapModel&#039;, function($http, $interval, StatModel, MapModel) {
+    var url = &#039;https://cors-mvv.herokuapp.com/bin/540/query.exe/dny?look_minx=10744745&amp;look_maxx=12440389&amp;look_miny=47825027&amp;look_maxy=48406811&amp;tpl=trains2json&amp;look_productclass=16&amp;look_json=yes&amp;performLocating=1&amp;look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&amp;unique=1444761619000&amp;&#039;;
+    
 }]);</textarea>
   </div>
 </div>
