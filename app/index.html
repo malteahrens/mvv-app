@@ -50,6 +50,9 @@
                     </div>
                 </div>
                 <div class="jumbotron">
+                    <nvd3 options='options' data='data' api="api" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                </div>
+                <div class="jumbotron">
                     <div style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric">
                         <span class="keen-metric-value" ng-cloak>{{countReports}}</span>
                         <span class="keen-metric-title" ng-cloak>∑ Meldungen / {{timeframeName}}</span>
@@ -59,9 +62,6 @@
                         <span class="keen-metric-title">Ø Minuten / {{timeframeName}}</span>
                     </div>
                 </div>                
-                <div class="jumbotron">
-                    <nvd3 options='options' data='data' api="api" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
-                </div>
                    <!-- <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S2&style=test" height="600" width="100%" frameborder="0">
                     </iframe>
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S3&style=test" height="600" width="100%" frameborder="0">
