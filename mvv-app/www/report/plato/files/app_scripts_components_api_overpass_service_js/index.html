@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Plato - app/scripts/components/statistics/statistic.model.js</title>
+  <title>Plato - app/scripts/components/api/overpass.service.js</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
@@ -36,7 +36,7 @@
 
 <div class="jumbotron">
   <div class="container">
-    <h1>app/scripts/components/statistics/statistic.model.js</h1>
+    <h1>app/scripts/components/api/overpass.service.js</h1>
   </div>
 </div>
 
@@ -44,11 +44,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
-      <p class="stat">65.73</p>
+      <p class="stat">93.64</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">135</p>
+      <p class="stat">5</p>
     </div>
   </div>
   <div class="row historical">
@@ -62,11 +62,11 @@
   <div class="row">
     <div class="col-md-6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
-      <p class="stat">32.76</p>
+      <p class="stat">3.19</p>
     </div>
     <div class="col-md-6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
-      <p class="stat">1.11</p>
+      <p class="stat">0.04</p>
     </div>
   </div>
 </div>
@@ -90,140 +90,10 @@
 <div class="container">
   <div class="row">
     <textarea id="file-source" class="col-md-12">angular.module(&#039;angularApp&#039;)
-.service(&#039;StatModel&#039;, function() {
-    var observerCallbacks = [];
-    var registerOberserver = function(callback) {
-        console.log(&quot;register callback for &quot;+callback.id);
-        observerCallbacks.push(callback);
-    };
-    var notifyObserver = function(value, operation) {
-        angular.forEach(observerCallbacks, function(callback) {
-            console.log(&quot;notify observer &quot;+callback.id+&quot; about change &quot;+operation);
-            console.log(value);
-            callback.notify(value, operation);
-        });
-    };
+.service(&#039;OverpassSrvc&#039;, [ &#039;$http&#039;, &#039;$interval&#039;, &#039;StatModel&#039;, &#039;MapModel&#039;, function($http, $interval, StatModel, MapModel) {
+    var url = &#039;https://cors-mvv.herokuapp.com/bin/540/query.exe/dny?look_minx=10744745&amp;look_maxx=12440389&amp;look_miny=47825027&amp;look_maxy=48406811&amp;tpl=trains2json&amp;look_productclass=16&amp;look_json=yes&amp;performLocating=1&amp;look_nv=zugposmode|3|get_ageofreport|yes|get_rtmsgstatus|yes|get_linenumber|no|interval|10000|intervalstep|10000|&amp;unique=1444761619000&amp;&#039;;
     
-    var liveMode = false;
-    var timeframe = &quot;this_1_day&quot;;
-    var countReports = 0;
-    var totalNumberOfDelays = 0;
-    var statisticsInterval = {
-        &#039;monthly&#039;: {
-            timeframe: &quot;this_1_month&quot;,
-            timeframeName: &quot;Monat&quot;,
-            interval: &quot;every_day&quot;
-        },
-        &quot;dayly&quot;: {
-            timeframe: &quot;this_1_day&quot;,
-            timeframeName: &quot;Heute&quot;,
-            interval: &quot;every_hour&quot;            
-        },
-        &quot;hourly&quot;: {
-            timeframe: &quot;this_1_hour&quot;,
-            timeframeName: &quot;Stunde&quot;,
-            interval: &quot;every_minute&quot;
-        },
-        &quot;live&quot; : {
-            pollingInterval: 1000 * 5,
-            timeframe: &quot;this_1_hour&quot;,
-            timeframeName: &quot;Stunde&quot;,
-            interval: &quot;every_minute&quot;
-        }
-    };
-
-    var getTotalNumberOfDelays = function() {
-        return totalNumberOfDelays;    
-    }
-
-    var getCountReports = function(value) {
-        return countReports; 
-    }
-
-    var setTotalNumberOfDelays = function(value) {
-        totalNumberOfDelays = value;
-        notifyObserver(totalNumberOfDelays, &#039;totalNumberOfDelays&#039;);
-    }
-
-    var setCountReports = function(value) {
-        countReports = value;
-        notifyObserver(countReports, &#039;countReports&#039;);
-    }
-
-    var data = []
-    var getData = function() {
-        console.log(&quot;getData&quot;);
-        var mindate = new Date(2015,9,20);
-        mindate.setTime( mindate.getTime() + mindate.getTimezoneOffset() );
-        return filter(data, mindate);
-    }
-    var setData = function(dataSet) {
-        data = dataSet;
-        notifyObserver(data, &#039;dataSet&#039;); 
-    }
-
-    var addData = function(dataToAdd) {
-        console.log(dataToAdd);        
-        data[0].values.push(dataToAdd);    
-        //notifyObserver(dataToAdd, &#039;dataAdd&#039;); 
-    }
-
-    var setInterval = function(mode) {
-        if(mode === &#039;live&#039;) {
-            liveMode=true;
-        } else {
-            liveMode=false;        
-        }
-        console.log(&#039;interval mode: &#039;+mode); 
-        notifyObserver(statisticsInterval[mode], &#039;intervalChange&#039;);
-    }
-
-    var filterToggle = false;
-    var filter = function(data, mindate) {
-        // early exit if filtering is disabled        
-        if(!filterToggle) {
-            return data;        
-        }
-        console.log(&quot;filter&quot;);
-
-        if(liveMode) {
-            mindate = new Date();
-            mindate.setHours(mindate.getHours() - 1);
-        }
-
-        var maxdate = new Date();
-        maxdate.setHours(23,59,0,0);
-        console.log(maxdate);
-        var result = [];
-        result[0] = {
-            key: &#039;abc&#039;,
-            values: []            
-        }
-        if(data.length&gt;0) {
-            for(var i=0; i&lt;data[0].values.length; i++) {
-                if(mindate.getTime() &lt; data[0].values[i].label &amp;&amp; maxdate.getTime() &gt; data[0].values[i].label) {  
-                    result[0].values.push({
-                        label: data[0].values[i].label,
-                        value: data[0].values[i].value
-                    });
-                }
-            }    
-        }
-        return result;
-    };
-
-    return {
-        registerOberserver: registerOberserver,
-        getData: getData,
-        setData: setData,
-        addData: addData,
-        setInterval: setInterval,
-        countReports: getCountReports,
-        TotalNumberOfDelays: getTotalNumberOfDelays,
-        setCountReports: setCountReports,
-        setTotalNumberOfDelays: setTotalNumberOfDelays
-    };
-});</textarea>
+}]);</textarea>
   </div>
 </div>
 
