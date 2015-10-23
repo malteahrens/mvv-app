@@ -1,4 +1,0 @@
-angular.module('angularApp')
-.controller('MapCtrl', [ '$scope', 'StatSrvc', 'MvvSrvc', function($scope, StatSrvc, MvvSrvc) {
-
-}]);

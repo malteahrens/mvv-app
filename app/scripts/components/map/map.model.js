@@ -22,7 +22,7 @@ angular.module('angularApp')
     }
 
     var addData = function(dataToAdd) {
-        data.push(dataToAdd);    
+        data.push(dataToAdd);
         notifyObserver(dataToAdd, 'dataAdd'); 
     }
 

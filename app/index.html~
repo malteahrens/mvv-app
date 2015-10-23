@@ -10,13 +10,12 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/nvd3/src/nv.d3.css" />
+    <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css" />
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
     <!-- endbower -->
     <!-- endbuild -->
       <!-- build:css(.tmp) styles/main.css -->
       <link rel="stylesheet" href="styles/main.css">
-      <link rel="stylesheet" href="styles/pygment_trac.css">
       <!-- endbuild -->
   </head>
   <body ng-app="angularApp">
@@ -40,7 +39,7 @@
                 <h1 translate="HEADING1"></h1>
                 <p translate="PARA1"></p>
             </div>
-            <div ng-controller="KeenCtrl">
+            <div ng-controller="StatCtrl">
                 <div ng-controller="ButtonsCtrl" style="width: 100%;">
                     <div class="btn-group">
                         <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'monthly'">Monat</label>
@@ -49,12 +48,8 @@
                     </div>
                 </div>
                 <div title="2" style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric"><span class="keen-metric-value" ng-cloak>{{countReports}}</span><span class="keen-metric-title" ng-cloak>∑ Meldungen / {{timeframeName}}</span></div>
-                <p>Zählt die Meldungen zur <a href="http://www.s-bahn-muenchen.de/s_muenchen/view/service/aktuelle_betriebslage.shtml" target="_blank">Aktuelle Betriebslage</a>. Auf der linken Seite kannst du auswählen, ob du den Durchnitt für diesen <strong>Monat</strong>, <strong>heute</strong>, oder die aktuelle Anzahl an Meldungen sehen willst (<strong>live</strong>). Die Auswahl gilt auch für die restlichen Statistiken.</p>
                 <div title="86.183908045977" style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric"><span class="keen-metric-value">{{totalNumberOfDelays}}</span><span class="keen-metric-title">Ø Minuten / {{timeframeName}}</span></div>
-                <p>Diese Statistik analysiert die Daten vom <a href="http://s-bahn-muenchen.hafas.de/bin/540/help.exe/dn?tpl=livefahrplan" target="_blank">Live Fahreplan</a>. Es werden die Verspätungen aller fahrenden Züge addiert und daraus der Durchschnitt gebildet.</p>
-                <nvd3 options='options' data='data' api="api" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>                
-                <p>Summe der durchschnittlichen Verspätungen aller Züge im zeitlichen Verlauf.</p>
-
+                <nvd3 options='options' data='data' api="api" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
                    <!-- <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S2&style=test" height="600" width="100%" frameborder="0">
                     </iframe>
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S3&style=test" height="600" width="100%" frameborder="0">
@@ -70,11 +65,11 @@
             </div>
         </section>
         <section ng-controller="MapCtrl">
-            <div id="map" style="height: 500px;"></div>
+            <div id="map" style="height: 500px;" ng-show="liveMode()"></div>
         </section>
-        <section>
+        <!-- <section>
             <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S1&style=test" height="600" width="100%" frameborder="0"></iframe>
-        </section>
+        </section>-->
         <footer>
 
         </footer>
@@ -103,8 +98,8 @@
     <script src="bower_components/angular-vibrator/src/vibrator.js"></script>
     <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
     <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/nvd3/nv.d3.js"></script>
-    <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+    <script src="bower_components/nvd3/build/nv.d3.js"></script>
+    <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
     <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
@@ -124,8 +119,6 @@
 
     <script src="scripts/controllers/vibration.js"></script>
     <script src="scripts/controllers/cordovaCtrl.js"></script>
-    <script src="scripts/controllers/nvd3.js"></script>
-    <script src="scripts/components/statistics/keen.controller.js"></script>
     <script src="scripts/components/statistics/statistic.model.js"></script>
     <script src="scripts/components/statistics/statistic.service.js"></script>
     <script src="scripts/components/statistics/statistic.controller.js"></script>
