@@ -52,6 +52,11 @@
                 <div class="jumbotron">
                     <nvd3 options='options' data='data' api="api" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
                 </div>
+                <div ng-controller="MapCtrl">
+                    <div class="jumbotron" ng-show="liveMode()">
+                        <div id="map" style="height: 500px;"></div>
+                    <div>
+                </div>
                 <div class="jumbotron">
                     <div style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric">
                         <span class="keen-metric-value" ng-cloak>{{countReports}}</span>
@@ -74,11 +79,6 @@
                     </iframe>
                     <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S8&style=test" height="600" width="100%" frameborder="0">
                     </iframe>-->
-            </div>
-            <div ng-controller="MapCtrl">
-                <div class="jumbotron" ng-show="liveMode()">
-                    <div id="map" style="height: 500px;"></div>
-                <div>
             </div>
         </section>
         <!-- <section>
