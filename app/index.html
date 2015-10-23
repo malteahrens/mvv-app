@@ -9,14 +9,13 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.min.css" />
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
     <!-- endbower -->
     <!-- endbuild -->
       <!-- build:css(.tmp) styles/main.css -->
       <link rel="stylesheet" href="styles/main.css">
-      <link rel="stylesheet" href="styles/pygment_trac.css">
       <!-- endbuild -->
   </head>
   <body ng-app="angularApp">
@@ -40,7 +39,7 @@
                 <h1 translate="HEADING1"></h1>
                 <p translate="PARA1"></p>
             </div>
-            <div ng-controller="KeenCtrl">
+            <div ng-controller="StatCtrl">
                 <div ng-controller="ButtonsCtrl" style="width: 100%;">
                     <div class="btn-group">
                         <label class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'monthly'">Monat</label>
@@ -89,17 +88,16 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.js"></script>
-    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="bower_components/angular-vibrator/src/vibrator.js"></script>
     <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
     <script src="bower_components/d3/d3.js"></script>
@@ -124,8 +122,6 @@
 
     <script src="scripts/controllers/vibration.js"></script>
     <script src="scripts/controllers/cordovaCtrl.js"></script>
-    <script src="scripts/controllers/nvd3.js"></script>
-    <script src="scripts/components/statistics/keen.controller.js"></script>
     <script src="scripts/components/statistics/statistic.model.js"></script>
     <script src="scripts/components/statistics/statistic.service.js"></script>
     <script src="scripts/components/statistics/statistic.controller.js"></script>
