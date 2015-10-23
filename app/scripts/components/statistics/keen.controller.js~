@@ -51,7 +51,7 @@ angular.module('angularApp')
                 top: 20,
                 right: 20,
                 bottom: 60,
-                left: 30
+                left: 55
             },
             x: function(d){ return d.label; },
             y: function(d){ return d.value; },
@@ -64,7 +64,7 @@ angular.module('angularApp')
             xAxis: {
                 axisLabelDistance: 30,
                 tickFormat: function(d){
-                    return d3.time.format('%X')(new Date(d));
+                    return d3.time.format('%H:%M')(new Date(d));
                 }
             },
             yAxis: {
@@ -72,7 +72,7 @@ angular.module('angularApp')
                 axisLabelDistance: 30
             }
         }
-    }
+    }    
 
     $scope.countReports = StatModel.countReports();
     var callback = {
@@ -85,17 +85,17 @@ angular.module('angularApp')
                 $scope.countReports = value
             }
             if(operation === 'dataSet') {
+                console.log("got dataset");
                 // based on plunker http://plnkr.co/edit/AwkX2FW0GGMzwplyTQMS
 	            $scope.data.length = 0;
 	            Array.prototype.push.apply($scope.data, StatModel.getData());
-
             }
             if(operation === 'dataAdd') {
                 //$scope.data[0].values.push(value);  
             }
             if(operation === 'intervalChange') {
-                //console.log("got intervalChange in keen.controller.js");
-                //console.log(value.timeframe);
+                console.log("got intervalChange in keen.controller.js");
+                console.log(value.timeframe);
                 $scope.interval = value.interval;
                 $scope.timeframeName = value.timeframeName;
 

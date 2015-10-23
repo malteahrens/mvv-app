@@ -58,7 +58,7 @@ angular.module('angularApp')
                         $animate.removeClass(element, 'fadein');
                         //console.log("AFTER remove class and BEFORE apply");
                         //console.log(element);
-                        scope.$apply();
+                        //scope.$apply();
                         //console.log("AFTER remove class and AFTER apply");
                         //console.log(element);
                     });

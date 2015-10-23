@@ -13,7 +13,10 @@ angular.module('angularApp')
         });
     };
     
+    var liveMode = false;
     var timeframe = "this_1_day";
+    var countReports = 0;
+    var totalNumberOfDelays = 0;
     var statisticsInterval = {
         'monthly': {
             timeframe: "this_1_month",
@@ -38,15 +41,11 @@ angular.module('angularApp')
         }
     };
 
-    var countReports = 0;
-    var totalNumberOfDelays = 0;
-
     var getTotalNumberOfDelays = function() {
         return totalNumberOfDelays;    
     }
 
     var getCountReports = function(value) {
-
         return countReports; 
     }
 
@@ -62,7 +61,10 @@ angular.module('angularApp')
 
     var data = []
     var getData = function() {
-        return filter(data);
+        console.log("getData");
+        var mindate = new Date(2015,9,20);
+        mindate.setTime( mindate.getTime() + mindate.getTimezoneOffset() );
+        return filter(data, mindate);
     }
     var setData = function(dataSet) {
         data = dataSet;
@@ -70,24 +72,54 @@ angular.module('angularApp')
     }
 
     var addData = function(dataToAdd) {
-        if(!liveMode) {
-            liveMode = true;
-            data[0].values = [];
-        }
+        console.log(dataToAdd);        
         data[0].values.push(dataToAdd);    
-        notifyObserver(dataToAdd, 'dataAdd'); 
+        //notifyObserver(dataToAdd, 'dataAdd'); 
     }
 
-    var setInterval = function(interval) {
-        console.log(interval);
-        notifyObserver(statisticsInterval[interval], 'intervalChange');
+    var setInterval = function(mode) {
+        if(mode === 'live') {
+            liveMode=true;
+        } else {
+            liveMode=false;        
+        }
+        console.log('interval mode: '+mode); 
+        notifyObserver(statisticsInterval[mode], 'intervalChange');
     }
 
-    var filter = function(data) {
-        var d = new Date();
-        d.setDate(d.getDate() - 1);
-        return data;
-    }
+    var filterToggle = false;
+    var filter = function(data, mindate) {
+        // early exit if filtering is disabled        
+        if(!filterToggle) {
+            return data;        
+        }
+        console.log("filter");
+
+        if(liveMode) {
+            mindate = new Date();
+            mindate.setHours(mindate.getHours() - 1);
+        }
+
+        var maxdate = new Date();
+        maxdate.setHours(23,59,0,0);
+        console.log(maxdate);
+        var result = [];
+        result[0] = {
+            key: 'abc',
+            values: []            
+        }
+        if(data.length>0) {
+            for(var i=0; i<data[0].values.length; i++) {
+                if(mindate.getTime() < data[0].values[i].label && maxdate.getTime() > data[0].values[i].label) {  
+                    result[0].values.push({
+                        label: data[0].values[i].label,
+                        value: data[0].values[i].value
+                    });
+                }
+            }    
+        }
+        return result;
+    };
 
     return {
         registerOberserver: registerOberserver,

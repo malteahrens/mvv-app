@@ -13,8 +13,8 @@ angular.module('angularApp')
             url: clientProperties.protocol+'://'+clientProperties.host+'/projects/'+clientProperties.projectId+'/queries/'+query.operation,
             headers: {
                'Authorization': clientProperties.readKey
-            },
-            data: query
+             },
+             data: query
         }
         $http(req).success(function(data, status) {
             if(query.id === 'reportQuery') {
@@ -28,6 +28,7 @@ angular.module('angularApp')
                 var values = [];
                 while (i < data.result.length) {
                     if(data.result[i].value != null) {
+                        var format = d3.time.format("%Y-%m-%d");
                         var dateTime = new Date(data.result[i]["timeframe"].start)
                         values.push({label: +dateTime, value: data.result[i]["value"]})
                     }
