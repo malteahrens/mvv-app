@@ -23,7 +23,7 @@ angular.module('angularApp')
 
     var liveDelays = {
         id: 'liveDelaysQuery',
-        operation: 'median',
+        operation: 'average',
         method: 'set',
         event_collection: "statistics",
         target_property: "totalNumberOfDelays",
