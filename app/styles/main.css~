@@ -157,8 +157,6 @@ header ul a strong {
 }
 
 section {
-  display: block;
-  height: 100%;
     width:500px;
     float:right;
     padding-bottom:50px;
@@ -176,12 +174,10 @@ hr {
 }
 
 footer {
-    width:500px;
+    width:270px;
     float:left;
     position:fixed;
     bottom:50px;
-    height:50px;
-    z-index: 1000;
 }
 
 @media print, screen and (max-width: 960px) {
@@ -204,7 +200,7 @@ footer {
     section {
         border:1px solid #e5e5e5;
         border-width:1px 0;
-        padding:0px 0;
+        padding:20px 0;
         margin:0 0 20px;
     }
 
@@ -285,8 +281,4 @@ footer {
   display: block;
   font-size: 24px;
   font-weight: 200;
-}
-
-[ng\:cloak], [ng-cloak], .ng-cloak {
-    display: none;
 }

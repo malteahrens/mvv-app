@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css" />
     <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/material.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.css" />
     <!-- endbower -->
     <!-- endbuild -->
       <!-- build:css(.tmp) styles/main.css -->
@@ -40,43 +41,31 @@
                 <div class="jumbotron">
                     <nvd3 options='options' data='data' api="api" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
                 </div>
-        <footer>
-                <div ng-controller="ButtonsCtrl" style="width: 100%;">
+                <div class="jumbotron" ng-show="false" ng-cloak style="display: none">
+                    <div style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric">
+                        <span class="keen-metric-value" ng-cloak>{{countReports}}</span>
+                        <span class="keen-metric-title" ng-cloak>∑ Meldungen / {{timeframeName}}</span>
+                    </div>
+                    <div style="background-color: #49c5b1; width:auto; display: none" class="keen-widget keen-metric">
+                        <span class="keen-metric-value" ng-cloak>{{totalNumberOfDelays}}</span>
+                        <span class="keen-metric-title">Ø Minuten / {{timeframeName}}</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-controller="MapCtrl" style="padding-bottom:100px">
+                <div class="jumbotron" ng-show="liveMode()">
+                    <div id="map" style="height: 500px;"></div>
+                </div>
+            </div>
+            <footer>
+                <div style="width: 100%;padding-bottom: 50px; background-color: #eeeeee;">
                     <div class="btn-group btn-group-justified">
                         <a href="#" class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'monthly'">&lt;</a>
                         <a href="#" class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'dayly'">INFO</a>
                         <a href="#" class="btn btn-primary" ng-model="radioModel" uib-btn-radio="'live'">&gt;</a>
                     </div>
                 </div>
-</footer>
-                <div class="jumbotron" ng-show="false">
-                    <div style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric">
-                        <span class="keen-metric-value" ng-cloak>{{countReports}}</span>
-                        <span class="keen-metric-title" ng-cloak>∑ Meldungen / {{timeframeName}}</span>
-                    </div>
-                    <div style="background-color: #49c5b1; width:auto;" class="keen-widget keen-metric">
-                        <span class="keen-metric-value" ng-cloak>{{totalNumberOfDelays}}</span>
-                        <span class="keen-metric-title">Ø Minuten / {{timeframeName}}</span>
-                    </div>
-                </div>                
-                   <!-- <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S2&style=test" height="600" width="100%" frameborder="0">
-                    </iframe>
-                    <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S3&style=test" height="600" width="100%" frameborder="0">
-                    </iframe>
-                    <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S4&style=test" height="600" width="100%" frameborder="0">
-                    </iframe>
-                    <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S6&style=test" height="600" width="100%" frameborder="0">
-                    </iframe>
-                    <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S7&style=test" height="600" width="100%" frameborder="0">
-                    </iframe>
-                    <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S8&style=test" height="600" width="100%" frameborder="0">
-                    </iframe>-->
-            </div>
-            <div ng-controller="MapCtrl">
-                <div class="jumbotron" ng-show="liveMode()">
-                    <div id="map" style="height: 500px;"></div>
-                <div>
-            </div>
+            </footer>    
         </section>
         <!-- <section>
             <iframe src="http://overpass-api.de/api/sketch-line?network=M%C3%BCnchner+Verkehrs-+und+Tarifverbund&ref=S1&style=test" height="600" width="100%" frameborder="0"></iframe>
@@ -116,6 +105,7 @@
     <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

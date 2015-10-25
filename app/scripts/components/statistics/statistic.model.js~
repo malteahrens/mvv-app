@@ -21,7 +21,7 @@ angular.module('angularApp')
         'monthly': {
             timeframe: "this_1_month",
             timeframeName: "Monat",
-            interval: "every_week"
+            interval: "every_day"
         },
         "dayly": {
             timeframe: "this_1_day",

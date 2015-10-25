@@ -28,7 +28,7 @@ angular.module('angularApp')
         event_collection: "statistics",
         target_property: "totalNumberOfDelays",
         timeframe: timeframe,
-        interval: "hourly",
+        interval: "daily",
         timezone: "UTC"
     }
 
@@ -94,8 +94,9 @@ angular.module('angularApp')
                 //$scope.data[0].values.push(value);  
             }
             if(operation === 'intervalChange') {
-                //console.log("got intervalChange in keen.controller.js");
-                //console.log(value.timeframe);
+                console.log("got intervalChange in statistic.controller.js");
+                console.log(value.timeframe);
+                console.log(value.interval);
                 $scope.interval = value.interval;
                 $scope.timeframeName = value.timeframeName;
 
