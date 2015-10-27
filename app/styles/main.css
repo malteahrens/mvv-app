@@ -44,12 +44,16 @@ footer {
   width:270px;
   float:left;
   position:fixed;
-  bottom:50px;
+  bottom:1em;
   background-color: #44B3C2;
 }
 
 @media print, screen and (max-width: 960px) {
   
+  body {
+    padding: 20px;
+  }
+
   div.wrapper {
     width:auto;
     margin:0;
@@ -58,7 +62,7 @@ footer {
   header, section, footer {
     float:none;
     position:static;
-    width:auto;
+    width:100%;
   }
   
   header {
@@ -69,7 +73,7 @@ footer {
     border:1px solid #e5e5e5;
     border-width:1px 0;
     padding:20px 0;
-    margin:0 0 20px;
+    margin:0;
   }
 
 }
@@ -92,7 +96,7 @@ footer {
   header {
     position:absolute;
     overflow:hidden;
-    height:100px;
+    height:20px;
     top:0px;
   }
 
@@ -101,14 +105,14 @@ footer {
     overflow:auto;
     border:0px;
     margin:0px;
-    top:100px;
-    bottom:100px; 
+    top:20px;
+    bottom:20px; 
   }
 
   footer {
     position:absolute;
     overflow:hidden;
-    height:100px;
+    height:20px;
     bottom:0px;
   }
 }
