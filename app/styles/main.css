@@ -93,10 +93,14 @@ footer {
     padding:0px;
   }
 
+  .wrapper {
+    height:vh100;
+  }
+
   header {
     position:absolute;
     overflow:hidden;
-    height:20px;
+    height:2em;
     top:0px;
   }
 
@@ -105,14 +109,14 @@ footer {
     overflow:auto;
     border:0px;
     margin:0px;
-    top:20px;
-    bottom:20px; 
+    top:2em;
+    bottom:2em; 
   }
 
   footer {
     position:absolute;
     overflow:hidden;
-    height:20px;
+    height:2em;
     bottom:0px;
   }
 }
