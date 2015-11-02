@@ -1,0 +1,39 @@
+body {
+        background: #c4d1d1;
+}
+.holy-grail {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+}
+.holy-grail-body {
+    display: flex;
+    flex: 1;
+}
+.holy-grail-content {
+    flex: 1;
+    background: #ffc94e;
+}
+.holy-grail-nav, .holy-grail-sidebar {
+    /* 12em is the width of the columns */
+    flex: 0 0 12em;
+    background: #c9ea5d;
+}
+.holy-grail-nav {
+    /* put the nav on the left */
+    order: -1;
+    background: #85d6e4;
+}
+header
+{
+    background: #92e4c9;
+}
+footer
+{
+    background: #f7846a;
+}
+* {
+    color: #333;
+}
